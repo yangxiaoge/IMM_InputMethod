@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.example.administrator.imm.MainActivity"/>
+<!--<input-method>标签的android:settingActivity属性可以制定输入法设置窗口。-->
