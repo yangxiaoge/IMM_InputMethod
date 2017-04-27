@@ -22,19 +22,24 @@ public class AndroidInputMethodService extends InputMethodService implements Key
     private KeyboardView keyboardView; // 对应keyboard.xml中定义的KeyboardView
     private Keyboard keyboard; // 对应qwerty.xml中定义的Keyboard
 
+    // 做了一些非UI方面的初始化，即字符串变量词汇分隔符的初始化
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate()");
     }
 
+    /**
+     * 键盘 第一次现实的时候调用
+     * @return
+     */
     @Override
     public View onCreateInputView() {
         // keyboard被创建后，将调用onCreateInputView函数
         keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);  // 此处使用了keyboard.xml
         keyboard = new Keyboard(this, R.xml.qwerty); // 此处使用了qwerty.xml
         keyboardView.setKeyboard(keyboard);
-        keyboardView.setOnKeyboardActionListener(this);
+        keyboardView.setOnKeyboardActionListener(this); //注册键盘事件监听
 
         Log.d(TAG, "onCreateInputView()");
         return keyboardView;
@@ -61,6 +66,11 @@ public class AndroidInputMethodService extends InputMethodService implements Key
         }
     }*/
 
+    /**
+     * 联想词条 第一次被现实的时候调用
+     * 在要显示侯选词汇的视图时，由框架调用，和onCreateInputView类似，在这个方法中，对candidateview进行初始化
+     * @return
+     */
     @Override
     public View onCreateCandidatesView() {
         Log.d(TAG, "onCreateCandidatesView()");
@@ -72,6 +82,7 @@ public class AndroidInputMethodService extends InputMethodService implements Key
         super.onStartInputView(info, restarting);
         Log.d(TAG, "onStartInputView()");
     }
+
 
     @Override
     protected void onCurrentInputMethodSubtypeChanged(InputMethodSubtype newSubtype) {
@@ -91,6 +102,7 @@ public class AndroidInputMethodService extends InputMethodService implements Key
         Log.d(TAG, "onDestroy()");
     }
 
+    //↓↓↓↓↓↓↓OnKeyboardActionListener接口对应的方法↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     @Override
     public void onPress(int primaryCode) {
 
